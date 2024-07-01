@@ -1,0 +1,29 @@
+# GraphQL schema example
+#
+# https://gqlgen.com/getting-started/
+
+
+type Post{
+  id: ID!
+  author: String!
+  title: String!
+  text: String!
+  isCommented: Boolean!
+  comments: [Comment!]!
+}
+
+type Query {
+  getPosts(limit: Int = 0, offset: Int = 10): [Post]
+  getPostById(id: Int!): Post
+}
+
+input PostInput{
+  author: String!
+  title: String!
+  text: String!
+  isCommented: Boolean!
+}
+
+type Mutation{
+  createPost(input: PostInput!): Post
+}

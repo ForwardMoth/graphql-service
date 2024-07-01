@@ -1,0 +1,19 @@
+type Comment{
+    id: ID!
+    username: String!
+    text: String!
+    postID: Int!
+    commentID: Int
+    replies: [Comment!]!
+}
+
+input CommentInput{
+    username: String!
+    text: String!
+    postID: Int!
+    commentID: Int
+}
+
+extend type Mutation{
+    createComment(input: CommentInput!): Comment
+}
