@@ -24,7 +24,10 @@ func (c *CommentDatabase) CreateComment(comment models.Comment) (models.Comment,
 
 	row := tx.QueryRow(query, comment.Username, comment.Text, comment.PostID, comment.CommentID)
 	if err := row.Scan(&comment.ID); err != nil {
-		tx.Rollback()
+		err := tx.Rollback()
+		if err != nil {
+			return models.Comment{}, err
+		}
 		return models.Comment{}, err
 	}
 

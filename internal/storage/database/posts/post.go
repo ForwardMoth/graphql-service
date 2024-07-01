@@ -25,7 +25,10 @@ func (p *PostDatabase) CreatePost(post models.Post) (models.Post, error) {
 
 	row := tx.QueryRow(query, post.Author, post.Title, post.Text, post.IsCommented)
 	if err := row.Scan(&post.ID); err != nil {
-		tx.Rollback()
+		err := tx.Rollback()
+		if err != nil {
+			return models.Post{}, err
+		}
 		return models.Post{}, err
 	}
 
